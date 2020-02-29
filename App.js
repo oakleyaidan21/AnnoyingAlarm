@@ -4,30 +4,11 @@ import {
   Text,
   View,
   SafeAreaView,
-  FlatList,
-  Alert
+  Alert,
+  AsyncStorage
 } from "react-native";
 import { Header, Icon } from "react-native-elements";
-import AlarmItem from "./components/AlarmItem";
-
-const DATA = [
-  // {
-  //   id: "1",
-  //   title: "first"
-  // },
-  // {
-  //   id: "2",
-  //   title: "second"
-  // },
-  // {
-  //   id: "3",
-  //   title: "third"
-  // },
-  // {
-  //   id: "4",
-  //   title: "fourth"
-  // }
-];
+import AlarmList from "./components/AlarmList";
 
 export default function App() {
   return (
@@ -42,25 +23,53 @@ export default function App() {
           <Icon
             name="add"
             color="orange"
-            onPress={() => {
-              Alert.alert("pressed");
+            onPress={async () => {
+              //bring up alarm prompt
+
+              //for now, just add shit to alarms storage
+              //get alarms:
+              let newAlarm = {
+                title: "alarm",
+                time: "9:30AM",
+                type: "annoying"
+              };
+              try {
+                let existingAlarms = await AsyncStorage.getItem("alarms");
+                if (existingAlarms !== null) {
+                  console.log("we have alarms");
+                  let newAlarms = JSON.parse(existingAlarms);
+                  if (!newAlarms) {
+                    newAlarms = [];
+                  }
+                  newAlarms.push(newAlarm);
+                  try {
+                    console.log("setting alarms");
+                    await AsyncStorage.setItem(
+                      "alarms",
+                      JSON.stringify(newAlarms)
+                    );
+                  } catch (error) {
+                    console.log(error);
+                  }
+                } else {
+                  try {
+                    console.log("setting alarms");
+                    let set = [];
+                    set.push(newAlarm);
+                    await AsyncStorage.setItem("alarms", JSON.stringify(set));
+                  } catch (error) {
+                    console.log(error);
+                  }
+                }
+              } catch (error) {
+                console.log(error);
+              }
             }}
           />
         }
       />
       <View style={styles.container}>
-        {DATA.length === 0 ? (
-          <Text>No alarms. Press '+' in the top right to create one!</Text>
-        ) : (
-          <FlatList
-            style={{ flex: 1, width: "100%" }}
-            data={DATA}
-            renderItem={({ item }) => (
-              <AlarmItem title={item.title} id={item.id} />
-            )}
-            keyExtractor={item => item.id}
-          />
-        )}
+        <AlarmList />
       </View>
     </SafeAreaView>
   );
@@ -69,6 +78,7 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+
     backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center"
