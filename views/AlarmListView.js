@@ -27,7 +27,11 @@ class AlarmListView extends Component {
           modalAnimation={new SlideAnimation({ slideFrom: "bottom" })}
         >
           <ModalContent>
-            <CreateAlarmModal />
+            <CreateAlarmModal
+              clearModal={() => {
+                this.setState({ showCreateAlarmModal: false });
+              }}
+            />
           </ModalContent>
         </Modal>
         <Header
