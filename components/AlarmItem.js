@@ -27,9 +27,24 @@ class AlarmItem extends Component {
         <View style={styles.rightSide}>
           <View style={styles.details}>
             <Text>{this.props.title}</Text>
+            <Text>
+              Time: {this.props.hr}:{this.props.min}
+            </Text>
+            <Text>{this.props.type}</Text>
+            <Text>{this.props.repeat ? "Repeats" : ""}</Text>
           </View>
           <View style={styles.settings}>
-            <Switch />
+            <Switch
+              value={this.props.activated}
+              thumbColor={"orange"}
+              trackColor={{ false: "grey", true: "orange" }}
+              ios_backgroundColor={"orange"}
+              onChange={() => {
+                this.props.disableAlarm();
+                //disable it in callback
+                //change activated value in local storage
+              }}
+            />
           </View>
         </View>
       </View>

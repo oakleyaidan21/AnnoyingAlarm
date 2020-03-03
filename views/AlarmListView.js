@@ -1,5 +1,12 @@
 import React, { Component } from "react";
-import { StyleSheet, View, SafeAreaView, AsyncStorage } from "react-native";
+import {
+  StyleSheet,
+  View,
+  SafeAreaView,
+  AsyncStorage,
+  ActivityIndicator,
+  Text
+} from "react-native";
 import { Header, Icon } from "react-native-elements";
 import AlarmList from "../components/AlarmList";
 import CreateAlarmModal from "../components/CreateAlarmModal";
@@ -8,14 +15,56 @@ import Modal, {
   ModalTitle,
   SlideAnimation
 } from "react-native-modals";
+
 class AlarmListView extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      showCreateAlarmModal: false
+      showCreateAlarmModal: false,
+      alarms: null,
+      loading: true
     };
   }
+
+  getAlarms = async () => {
+    try {
+      let existingAlarms = await AsyncStorage.getItem("alarms");
+      if (existingAlarms !== null) {
+        this.setState({ alarms: existingAlarms });
+        return true;
+      }
+    } catch (error) {
+      console.log("error fetching alarms: ", error);
+      return false;
+    }
+    return false;
+  };
+
+  componentDidMount = async () => {
+    this.getAlarms().then(() => {
+      this.setState({ loading: false });
+    });
+  };
+
+  addAlarmToStorageAndView = async alarm => {
+    //first, get the alarms
+    let newAlarms = JSON.parse(this.state.alarms);
+    if (!newAlarms) {
+      newAlarms = [];
+    }
+    newAlarms.push(alarm);
+    //reset old local storage with this
+    try {
+      await AsyncStorage.setItem("alarms", JSON.stringify(newAlarms));
+    } catch (error) {
+      console.log("error in adding to local storage", error);
+    }
+    //override current alarm list
+    this.setState({ alarms: JSON.stringify(newAlarms) });
+  };
+
   render() {
+    console.log("alarms:", this.state.alarms);
     return (
       <SafeAreaView style={{ flex: 1 }}>
         <Modal
@@ -31,6 +80,9 @@ class AlarmListView extends Component {
               clearModal={() => {
                 this.setState({ showCreateAlarmModal: false });
               }}
+              addAlarm={alarm => {
+                this.addAlarmToStorageAndView(alarm);
+              }}
             />
           </ModalContent>
         </Modal>
@@ -45,52 +97,18 @@ class AlarmListView extends Component {
               name="add"
               color="orange"
               onPress={async () => {
-                //bring up alarm prompt
                 this.setState({ showCreateAlarmModal: true });
-                //for now, just add shit to alarms storage
-                //get alarms:
-                // let newAlarm = {
-                //   title: "alarm",
-                //   time: "9:30AM",
-                //   type: "annoying"
-                // };
-                // try {
-                //   let existingAlarms = await AsyncStorage.getItem("alarms");
-                //   if (existingAlarms !== null) {
-                //     console.log("we have alarms");
-                //     let newAlarms = JSON.parse(existingAlarms);
-                //     if (!newAlarms) {
-                //       newAlarms = [];
-                //     }
-                //     newAlarms.push(newAlarm);
-                //     try {
-                //       console.log("setting alarms");
-                //       await AsyncStorage.setItem(
-                //         "alarms",
-                //         JSON.stringify(newAlarms)
-                //       );
-                //     } catch (error) {
-                //       console.log(error);
-                //     }
-                //   } else {
-                //     try {
-                //       console.log("setting alarms");
-                //       let set = [];
-                //       set.push(newAlarm);
-                //       await AsyncStorage.setItem("alarms", JSON.stringify(set));
-                //     } catch (error) {
-                //       console.log(error);
-                //     }
-                //   }
-                // } catch (error) {
-                //   console.log(error);
-                // }
               }}
+              disabled={this.state.loading}
             />
           }
         />
         <View style={styles.container}>
-          <AlarmList />
+          {!this.state.loading ? (
+            <AlarmList alarms={JSON.parse(this.state.alarms)} />
+          ) : (
+            <ActivityIndicator />
+          )}
         </View>
       </SafeAreaView>
     );

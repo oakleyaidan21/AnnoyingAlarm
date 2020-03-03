@@ -30,7 +30,10 @@ class CreateAlarmModal extends Component {
           <TextInput
             style={styles.nameInput}
             placeholder="Untitled"
-          ></TextInput>
+            onChangeText={text => {
+              this.setState({ alarmName: text });
+            }}
+          />
         </View>
         <Button
           onPress={() => {
@@ -92,15 +95,20 @@ class CreateAlarmModal extends Component {
           color="orange"
           onPress={() => {
             //check params
-
-            //add new alarm to local storage with params
-
-            //add it to view
-
+            //add new alarm to local storage with params and add it to view
+            let newAlarm = {
+              name: this.state.alarmName,
+              hr: this.state.pickedHr,
+              min: this.state.pickedMin,
+              type: this.state.alarmType,
+              repeat: this.state.repeat,
+              activated: true
+            };
+            this.props.addAlarm(newAlarm);
             //clear modal
             this.props.clearModal();
           }}
-        ></Button>
+        />
       </View>
     );
   }

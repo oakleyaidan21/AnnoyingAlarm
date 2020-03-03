@@ -27,34 +27,25 @@ class AlarmList extends Component {
     };
   }
 
-  _retrieveAlarms = async () => {
-    try {
-      const value = await AsyncStorage.getItem("alarms");
-      if (value !== null) {
-        return value;
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  componentDidMount = async () => {
-    //get alarms
-    let alarms = await this._retrieveAlarms();
-    console.log("alarms: ", alarms);
-  };
-
   render() {
     return (
       <View style={{ flex: 1, width: "100%" }}>
-        {this.state.alarms.length === 0 ? (
-          <Text>no alarms</Text>
+        {!this.props.alarms ? (
+          <Text>No alarms</Text>
         ) : (
           <FlatList
             style={{ flex: 1, width: "100%" }}
-            data={this.state.alarms}
+            data={this.props.alarms}
             renderItem={({ item }) => (
-              <AlarmItem title={item.title} id={item.id} />
+              <AlarmItem
+                title={item.name}
+                id={item.id}
+                activated={item.activated}
+                hr={item.hr}
+                min={item.min}
+                type={item.type}
+                repeat={item.repeat}
+              />
             )}
             keyExtractor={item => item.id}
           />
