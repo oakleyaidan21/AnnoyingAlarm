@@ -27,6 +27,14 @@ class AlarmList extends Component {
     };
   }
 
+  toggleAlarm = alarm => {
+    for (let i = 0; i < this.props.alarms.length; i++) {
+      if (JSON.stringify(alarm) === JSON.stringify(this.props.alarms[i])) {
+        this.props.toggleAlarm(alarm, i);
+      }
+    }
+  };
+
   render() {
     return (
       <View style={{ flex: 1, width: "100%" }}>
@@ -38,6 +46,9 @@ class AlarmList extends Component {
             data={this.props.alarms}
             renderItem={({ item }) => (
               <AlarmItem
+                toggleAlarm={() => {
+                  this.toggleAlarm(item);
+                }}
                 title={item.name}
                 id={item.id}
                 activated={item.activated}

@@ -40,9 +40,7 @@ class AlarmItem extends Component {
               trackColor={{ false: "grey", true: "orange" }}
               ios_backgroundColor={"orange"}
               onChange={() => {
-                this.props.disableAlarm();
-                //disable it in callback
-                //change activated value in local storage
+                this.props.toggleAlarm();
               }}
             />
           </View>

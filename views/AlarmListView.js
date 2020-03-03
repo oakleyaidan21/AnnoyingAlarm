@@ -63,8 +63,20 @@ class AlarmListView extends Component {
     this.setState({ alarms: JSON.stringify(newAlarms) });
   };
 
+  toggleAlarm = async (alarm, index) => {
+    let newAlarms = JSON.parse(this.state.alarms);
+    newAlarms[index].activated = !newAlarms[index].activated;
+    //reset in local storage
+    try {
+      await AsyncStorage.setItem("alarms", JSON.stringify(newAlarms));
+    } catch (error) {
+      console.log("error in changing local storage", error);
+    }
+    //reset in state
+    this.setState({ alarms: JSON.stringify(newAlarms) });
+  };
+
   render() {
-    console.log("alarms:", this.state.alarms);
     return (
       <SafeAreaView style={{ flex: 1 }}>
         <Modal
@@ -105,7 +117,12 @@ class AlarmListView extends Component {
         />
         <View style={styles.container}>
           {!this.state.loading ? (
-            <AlarmList alarms={JSON.parse(this.state.alarms)} />
+            <AlarmList
+              alarms={JSON.parse(this.state.alarms)}
+              toggleAlarm={(alarm, index) => {
+                this.toggleAlarm(alarm, index);
+              }}
+            />
           ) : (
             <ActivityIndicator />
           )}
