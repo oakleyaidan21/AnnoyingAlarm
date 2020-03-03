@@ -4,8 +4,7 @@ import {
   View,
   SafeAreaView,
   AsyncStorage,
-  ActivityIndicator,
-  Text
+  ActivityIndicator
 } from "react-native";
 import { Header, Icon } from "react-native-elements";
 import AlarmList from "../components/AlarmList";
@@ -15,6 +14,8 @@ import Modal, {
   ModalTitle,
   SlideAnimation
 } from "react-native-modals";
+import { Notifications } from "expo";
+import * as Permissions from "expo-permissions";
 
 class AlarmListView extends Component {
   constructor(props) {
@@ -25,6 +26,25 @@ class AlarmListView extends Component {
       loading: true
     };
   }
+
+  sendNotification = async () => {
+    await Notifications.createChannelAndroidAsync("alarmTypes", {
+      name: "annoyingAlarms",
+      sound: true
+    });
+    let noti = {
+      title: "alarm!",
+      body: "this is a notification!",
+      data: {
+        yeet: "yeet"
+      },
+      android: {
+        color: "orange",
+        channelId: "alarmTypes"
+      }
+    };
+    await Notifications.presentLocalNotificationAsync(noti);
+  };
 
   getAlarms = async () => {
     try {
@@ -44,6 +64,16 @@ class AlarmListView extends Component {
     this.getAlarms().then(() => {
       this.setState({ loading: false });
     });
+
+    //get permissions
+    const { status } = await Permissions.getAsync(Permissions.NOTIFICATIONS);
+    if (status !== "granted") {
+      console.log("not granted");
+      await Permissions.askAsync(Permissions.NOTIFICATIONS);
+    } else {
+      console.log("granted");
+    }
+    this.sendNotification();
   };
 
   addAlarmToStorageAndView = async alarm => {
