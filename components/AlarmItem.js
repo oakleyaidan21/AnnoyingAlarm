@@ -16,20 +16,16 @@ class AlarmItem extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <View style={styles.icon}>
-          <Image
-            style={{ flex: 1 }}
-            source={{
-              uri: "https://image.flaticon.com/icons/png/512/62/62834.png"
-            }}
-          />
+        <View style={styles.left}>
+          <Text style={styles.name}>{this.props.name}</Text>
+          <View style={styles.bar}></View>
+          <Text style={styles.time}>
+            {this.props.hr}:
+            {this.props.min < 10 ? "0" + this.props.min : this.props.min}
+          </Text>
         </View>
         <View style={styles.rightSide}>
           <View style={styles.details}>
-            <Text>{this.props.title}</Text>
-            <Text>
-              Time: {this.props.hr}:{this.props.min}
-            </Text>
             <Text>{this.props.type}</Text>
             <Text>{this.props.repeat ? "Repeats" : ""}</Text>
           </View>
@@ -57,8 +53,25 @@ const styles = StyleSheet.create({
     margin: 6,
     flexDirection: "row"
   },
-  icon: {
-    flex: 1
+  left: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center"
+  },
+  name: {
+    textAlign: "center",
+    fontSize: 40,
+    fontWeight: "bold"
+  },
+  bar: {
+    width: "95%",
+    height: 2,
+    backgroundColor: "black"
+  },
+  time: {
+    fontSize: 70,
+    fontWeight: "bold",
+    textAlign: "center"
   },
   rightSide: {
     flex: 1

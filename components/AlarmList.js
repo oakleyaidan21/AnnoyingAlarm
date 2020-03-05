@@ -37,9 +37,18 @@ class AlarmList extends Component {
 
   render() {
     return (
-      <View style={{ flex: 1, width: "100%" }}>
+      <View
+        style={{
+          flex: 1,
+          width: "100%",
+          justifyContent: "center",
+          alignItems: "center"
+        }}
+      >
         {!this.props.alarms ? (
-          <Text>No alarms</Text>
+          <Text style={{ textAlign: "center", color: "grey" }}>
+            No alarms yet. Press the "+" button to add one!
+          </Text>
         ) : (
           <FlatList
             style={{ flex: 1, width: "100%" }}
@@ -49,8 +58,7 @@ class AlarmList extends Component {
                 toggleAlarm={() => {
                   this.toggleAlarm(item);
                 }}
-                title={item.name}
-                id={item.id}
+                name={item.name}
                 activated={item.activated}
                 hr={item.hr}
                 min={item.min}
@@ -58,7 +66,7 @@ class AlarmList extends Component {
                 repeat={item.repeat}
               />
             )}
-            keyExtractor={item => item.id}
+            keyExtractor={item => item.name + item.hr + item.min + item.type}
           />
         )}
       </View>

@@ -73,7 +73,7 @@ class AlarmListView extends Component {
     } else {
       console.log("granted");
     }
-    this.sendNotification();
+    // this.sendNotification();
   };
 
   addAlarmToStorageAndView = async alarm => {
@@ -110,7 +110,7 @@ class AlarmListView extends Component {
     return (
       <SafeAreaView style={{ flex: 1 }}>
         <Modal
-          modalTitle={<ModalTitle title="Create new Alarm" />}
+          modalTitle={<ModalTitle title="Create New Alarm" />}
           visible={this.state.showCreateAlarmModal}
           onTouchOutside={() => {
             this.setState({ showCreateAlarmModal: false });
@@ -141,6 +141,7 @@ class AlarmListView extends Component {
               onPress={async () => {
                 this.setState({ showCreateAlarmModal: true });
               }}
+              backgroundColor="transparent"
               disabled={this.state.loading}
             />
           }

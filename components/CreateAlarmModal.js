@@ -12,12 +12,27 @@ class CreateAlarmModal extends Component {
       pickedHr: "0",
       alarmName: "",
       alarmType: "",
-      repeat: false
+      repeat: false,
+      timePicked: false
     };
   }
+
   render() {
     return (
       <View style={styles.settingsBox}>
+        <Text style={styles.time}>
+          {this.state.pickedHr}:
+          {this.state.pickedMin < 10
+            ? "0" + this.state.pickedMin
+            : this.state.pickedMin}
+        </Text>
+        <Button
+          onPress={() => {
+            this.setState({ showTimePicker: true });
+          }}
+          title="pick Time"
+          color="orange"
+        />
         <View
           style={{
             flexDirection: "row",
@@ -26,28 +41,16 @@ class CreateAlarmModal extends Component {
             justifyContent: "center"
           }}
         >
-          <Text>Name this alarm:</Text>
+          <Text>Enter a Name:</Text>
           <TextInput
             style={styles.nameInput}
             placeholder="Untitled"
             onChangeText={text => {
               this.setState({ alarmName: text });
             }}
+            maxLength={8}
           />
         </View>
-        <Button
-          onPress={() => {
-            this.setState({ showTimePicker: true });
-          }}
-          title="pick Time"
-          color="orange"
-        />
-        <Text>
-          Selected time: {this.state.pickedHr}:
-          {this.state.pickedMin < 10
-            ? "0" + this.state.pickedMin
-            : this.state.pickedMin}
-        </Text>
         <DateTimePicker
           isVisible={this.state.showTimePicker}
           mode="time"
@@ -55,7 +58,8 @@ class CreateAlarmModal extends Component {
             this.setState({
               pickedMin: date.getMinutes(),
               pickedHr: date.getHours(),
-              showTimePicker: false
+              showTimePicker: false,
+              timePicked: true
             });
           }}
           onCancel={() => {
@@ -67,7 +71,8 @@ class CreateAlarmModal extends Component {
           data={[
             { value: "Persistant" },
             { value: "Annoying" },
-            { value: "Puzzle" }
+            { value: "Puzzle" },
+            { value: "Custom" }
           ]}
           onChangeText={text => {
             this.setState({ alarmType: text });
@@ -81,20 +86,27 @@ class CreateAlarmModal extends Component {
             justifyContent: "center"
           }}
         >
-          <Text>Repeat every day?</Text>
+          <Text>Repeats?</Text>
           <CheckBox
             value={this.state.repeat}
             disabled={false}
             onChange={() => {
               this.setState({ repeat: !this.state.repeat });
             }}
+            tintColors={{ true: "orange", false: "grey" }}
           />
         </View>
         <Button
           title="SUBMIT"
           color="orange"
+          disabled={
+            !(
+              this.state.alarmName.length !== 0 &&
+              this.state.alarmType.length !== 0 &&
+              this.state.timePicked
+            )
+          }
           onPress={() => {
-            //check params
             //add new alarm to local storage with params and add it to view
             let newAlarm = {
               name: this.state.alarmName,
@@ -102,7 +114,7 @@ class CreateAlarmModal extends Component {
               min: this.state.pickedMin,
               type: this.state.alarmType,
               repeat: this.state.repeat,
-              activated: true
+              activated: false
             };
             this.props.addAlarm(newAlarm);
             //clear modal
@@ -116,8 +128,6 @@ class CreateAlarmModal extends Component {
 
 const styles = StyleSheet.create({
   settingsBox: {
-    // width: "95%",
-    // height: "80%",
     backgroundColor: "white",
     borderRadius: 5
   },
@@ -127,6 +137,12 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     borderRadius: 5,
     padding: 5
+  },
+  time: {
+    textAlign: "center",
+    margin: 10,
+    fontSize: 40,
+    fontWeight: "bold"
   }
 });
 
