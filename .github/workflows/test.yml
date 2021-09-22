@@ -6,7 +6,7 @@ on:
 jobs:
   temp:
     runs-on: ubuntu-latest
-    setps:
+    steps:
       - name: Hello
         run: |
           echo "Hello!"
