@@ -4,16 +4,22 @@ on:
     branches:
       - master
 jobs:
-  setup:
+  temp:
     runs-on: ubuntu-latest
-    steps:
-      - name: install
+    setps:
+      - name: Hello
         run: |
-          npm install
-  test:
-    needs: setup
-    runs-on: ubuntu-latest
-    steps:
-      - name: run tests
-        run: |
-          npm test
+          echo "Hello!"
+  # setup:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: install
+  #       run: |
+  #         npm install
+  # test:
+  #   needs: setup
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: run tests
+  #       run: |
+  #         npm test
