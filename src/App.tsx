@@ -9,7 +9,7 @@ setupComponentThemes();
 
 const App = () => {
   return (
-    <View useSafeArea center>
+    <View useSafeArea flex>
       <MainNavigator />
     </View>
   );
