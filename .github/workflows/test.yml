@@ -1,0 +1,12 @@
+name: test-react-native-app
+on:
+  push:
+    branches:
+      - master
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: run tests
+        run: |
+          npm test
