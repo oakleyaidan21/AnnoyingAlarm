@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { LayoutAnimation } from 'react-native';
+import { Alert, LayoutAnimation } from 'react-native';
 import { Button, FloatingButton, Text, View } from 'react-native-ui-lib';
 import DateTimePicker from '../components/DateTimePicker';
+import { createAlarm } from '../utils/AlarmUtils';
 import { getNearestMultipleOfFive } from '../utils/TimeUtils';
 
 const CreateAlarm = () => {
@@ -16,7 +17,14 @@ const CreateAlarm = () => {
   );
 
   const submitAlarm = () => {
-    console.log('sub!');
+    createAlarm(hours, minutes, amOrPM)
+      .then(() => {
+        Alert.alert('alarm created!');
+      })
+      .catch(e => {
+        Alert.alert('alarm failed:');
+        console.log(e);
+      });
   };
 
   return (

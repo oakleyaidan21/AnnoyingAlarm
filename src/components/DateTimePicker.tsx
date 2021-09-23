@@ -66,6 +66,7 @@ const DateTimePicker = (props: DateTimePickerProps) => {
         <Text
           style={{ fontWeight: 'bold', fontSize: 40 }}
           color={showAMPM ? Colors.primary : Colors.primaryText}>
+          {' '}
           {amOrPM}
         </Text>
       </View>
