@@ -18,8 +18,8 @@ const CreateAlarm = () => {
 
   const submitAlarm = () => {
     createAlarm(hours, minutes, amOrPM)
-      .then(() => {
-        Alert.alert('alarm created!');
+      .then((time: Date) => {
+        Alert.alert('alarm created!' + time.toLocaleTimeString());
       })
       .catch(e => {
         Alert.alert('alarm failed:');

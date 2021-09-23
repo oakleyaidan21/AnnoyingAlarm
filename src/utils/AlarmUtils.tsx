@@ -22,4 +22,6 @@ export const createAlarm = async (
     ...alarmNotifData,
     fire_date: fireDate,
   });
+
+  return d;
 };
