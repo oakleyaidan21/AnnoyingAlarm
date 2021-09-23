@@ -5,7 +5,7 @@ import Settings from '../screens/Settings';
 import CreateAlarm from '../screens/CreateAlarm';
 import { getTabBarIconName } from '../utils/TabBarUtils';
 import { Icon } from 'react-native-elements/dist/icons/Icon';
-import { Colors } from 'react-native-ui-lib';
+import { Colors, Text } from 'react-native-ui-lib';
 
 const Tab = createBottomTabNavigator();
 
@@ -18,8 +18,15 @@ const TabNavigator = () => {
           return (
             <Icon
               name={iconName}
-              color={focused ? Colors.focusedIcon : Colors.unfocusedIcon}
+              color={focused ? Colors.primary : Colors.unfocusedIcon}
             />
+          );
+        },
+        tabBarLabel: ({ focused }) => {
+          return (
+            <Text color={focused ? Colors.primary : Colors.unfocusedIcon}>
+              {route.name}
+            </Text>
           );
         },
       })}>
