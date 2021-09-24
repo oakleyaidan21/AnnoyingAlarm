@@ -33,12 +33,14 @@ const CreateAlarm = () => {
         onHourChange={setHours}
         hour={hours}
         minute={minutes}
-        onMinuteChange={setMinutes}
+        onMinuteChange={(m: number) => {
+          setMinutes(m);
+          setShowSubmitButton(true);
+        }}
         amOrPM={amOrPM}
         onAMPMChange={(res: string) => {
           setAMorPM(res);
           LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
-          setShowSubmitButton(true);
         }}
       />
       <FloatingButton

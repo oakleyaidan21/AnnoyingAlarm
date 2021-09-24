@@ -13,7 +13,7 @@ export const createAlarm = async (
   const alarmNotifData = {
     title: 'My Notification Title',
     message: 'My Notification Message',
-    channel: 'my_channel_id',
+    // channel: 'my_channel_id',
     small_icon: 'ic_launcher',
     data: { foo: 'bar' },
   };
