@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 import { Alert, LayoutAnimation } from 'react-native';
 import { FloatingButton, View } from 'react-native-ui-lib';
 import DateTimePicker from '../components/DateTimePicker';
-import { scheduleAlarmNotification } from '../utils/AlarmUtils';
 import {
   getHoursAndMinutesBetweenTimes,
   getNearestMultipleOfFive,
 } from '../utils/DateTimeUtils';
+import { scheduleAlarmNotification } from '../utils/NotificationUtils';
 
 const CreateAlarm = () => {
   const [hours, setHours] = useState<number>(new Date().getHours() % 12);
