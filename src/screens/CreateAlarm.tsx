@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Alert, LayoutAnimation } from 'react-native';
-import { Button, FloatingButton, Text, View } from 'react-native-ui-lib';
+import { FloatingButton, View } from 'react-native-ui-lib';
 import DateTimePicker from '../components/DateTimePicker';
 import { scheduleAlarmNotification } from '../utils/AlarmUtils';
 import {

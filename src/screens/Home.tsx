@@ -3,7 +3,8 @@ import { FlatList } from 'react-native';
 import PushNotification, {
   PushNotificationScheduledLocalObject,
 } from 'react-native-push-notification';
-import { Card, Text, View } from 'react-native-ui-lib';
+import { View } from 'react-native-ui-lib';
+import AlarmItem from '../components/AlarmItem';
 
 const Home = () => {
   const [alarms, setAlarms] = useState<PushNotificationScheduledLocalObject[]>(
@@ -24,13 +25,10 @@ const Home = () => {
     <View flex>
       <FlatList
         style={{ flex: 1 }}
+        contentContainerStyle={{ paddingHorizontal: 10 }}
         data={alarms}
         renderItem={({ item }) => {
-          return (
-            <Card style={{ marginTop: 10, padding: 10 }}>
-              <Text>{item.message}</Text>
-            </Card>
-          );
+          return <AlarmItem notificationData={item} />;
         }}
       />
     </View>
