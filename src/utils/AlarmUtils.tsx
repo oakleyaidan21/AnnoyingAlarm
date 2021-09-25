@@ -1,7 +1,5 @@
 // @ts-ignore
-import ReactNativeAN from 'react-native-alarm-notification';
 import PushNotification from 'react-native-push-notification';
-import { create } from 'react-test-renderer';
 
 /**
  * Creates a date-time for an alarm on the specified date
@@ -19,6 +17,7 @@ export const createAlarmDate = (
   let alarmDate = date ? date : new Date();
   alarmDate.setHours(amOrPM === 'AM' ? hours : hours + 12);
   alarmDate.setMinutes(minutes);
+  alarmDate.setSeconds(0);
   // if the alarm would be before the current time, add a day
   if (alarmDate < new Date()) {
     alarmDate.setDate(alarmDate.getDate() + 1);

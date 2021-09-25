@@ -29,9 +29,6 @@ const CreateAlarm = () => {
         diff.minutes +
         ' minutes from now',
     );
-    // .then((time: Date) => {
-    //   Alert.alert('alarm created!' + time.toLocaleTimeString());
-    // })
   };
 
   return (

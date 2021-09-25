@@ -1,10 +1,38 @@
-import React from 'react';
-import { Text, View } from 'react-native-ui-lib';
+import React, { useEffect, useState } from 'react';
+import { FlatList } from 'react-native';
+import PushNotification, {
+  PushNotificationScheduledLocalObject,
+} from 'react-native-push-notification';
+import { Card, Text, View } from 'react-native-ui-lib';
 
 const Home = () => {
+  const [alarms, setAlarms] = useState<PushNotificationScheduledLocalObject[]>(
+    [],
+  );
+
+  const getNotifications = (
+    notifications: PushNotificationScheduledLocalObject[],
+  ) => {
+    setAlarms(notifications);
+  };
+
+  useEffect(() => {
+    PushNotification.getScheduledLocalNotifications(getNotifications);
+  }, []);
+
   return (
-    <View flex center>
-      <Text>Home!</Text>
+    <View flex>
+      <FlatList
+        style={{ flex: 1 }}
+        data={alarms}
+        renderItem={({ item }) => {
+          return (
+            <Card style={{ marginTop: 10, padding: 10 }}>
+              <Text>{item.message}</Text>
+            </Card>
+          );
+        }}
+      />
     </View>
   );
 };

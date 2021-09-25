@@ -1,5 +1,5 @@
 import React from 'react';
-import { Platform, UIManager } from 'react-native';
+import { Platform, StatusBar, UIManager } from 'react-native';
 import { View } from 'react-native-ui-lib';
 import MainNavigator from './navigation/MainNavigator';
 import { setupComponentThemes } from './rnui/ComponentConfig';
@@ -17,9 +17,12 @@ if (Platform.OS === 'android') {
 
 const App = () => {
   return (
-    <View useSafeArea flex>
-      <MainNavigator />
-    </View>
+    <>
+      <StatusBar backgroundColor={'white'} barStyle="dark-content" />
+      <View useSafeArea flex>
+        <MainNavigator />
+      </View>
+    </>
   );
 };
 

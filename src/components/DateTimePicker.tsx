@@ -91,6 +91,7 @@ const DateTimePicker = (props: DateTimePickerProps) => {
             <SegmentedControl
               segments={[{ label: 'AM' }, { label: 'PM' }]}
               onChangeIndex={handleAMPMSelection}
+              initialIndex={amOrPM === 'AM' ? 0 : 1}
             />
           )}
         </View>
