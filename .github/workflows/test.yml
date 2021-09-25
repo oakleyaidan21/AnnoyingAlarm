@@ -7,9 +7,11 @@ jobs:
   temp:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
       - name: Hello
         run: |
           echo "Hello!"
-      - name: test
+      - name: Run tests
         run: |
           npm install && npm test
