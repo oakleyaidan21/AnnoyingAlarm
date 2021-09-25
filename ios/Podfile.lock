@@ -345,6 +345,8 @@ PODS:
     - React
   - RNCPicker (2.1.0):
     - React-Core
+  - RNCPushNotificationIOS (1.10.1):
+    - React-Core
   - RNDateTimePicker (3.5.2):
     - React-Core
   - RNGestureHandler (1.10.3):
@@ -444,6 +446,7 @@ DEPENDENCIES:
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
   - ReactNativeUiLib (from `../node_modules/react-native-ui-lib/lib`)
   - "RNCPicker (from `../node_modules/@react-native-picker/picker`)"
+  - "RNCPushNotificationIOS (from `../node_modules/@react-native-community/push-notification-ios`)"
   - "RNDateTimePicker (from `../node_modules/@react-native-community/datetimepicker`)"
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - RNReanimated (from `../node_modules/react-native-reanimated`)
@@ -536,6 +539,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-ui-lib/lib"
   RNCPicker:
     :path: "../node_modules/@react-native-picker/picker"
+  RNCPushNotificationIOS:
+    :path: "../node_modules/@react-native-community/push-notification-ios"
   RNDateTimePicker:
     :path: "../node_modules/@react-native-community/datetimepicker"
   RNGestureHandler:
@@ -597,6 +602,7 @@ SPEC CHECKSUMS:
   ReactCommon: eafed38eec7b591c31751bfa7494801618460459
   ReactNativeUiLib: cde7263a7d308b60161cd286f95c9433e79f2f7d
   RNCPicker: f7a40b21b915b7a187624d52f52b7bc2f73ea413
+  RNCPushNotificationIOS: 87b8d16d3ede4532745e05b03c42cff33a36cc45
   RNDateTimePicker: 7658208086d86d09e1627b5c34ba0cf237c60140
   RNGestureHandler: a479ebd5ed4221a810967000735517df0d2db211
   RNReanimated: ad24db8af24e3fe1b5c462785bc3db8d5baae2ee

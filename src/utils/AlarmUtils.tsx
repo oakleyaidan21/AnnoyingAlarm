@@ -1,5 +1,6 @@
 // @ts-ignore
 import ReactNativeAN from 'react-native-alarm-notification';
+import PushNotification from 'react-native-push-notification';
 import { create } from 'react-test-renderer';
 
 /**
@@ -18,25 +19,34 @@ export const createAlarmDate = (
   let alarmDate = date ? date : new Date();
   alarmDate.setHours(amOrPM === 'AM' ? hours : hours + 12);
   alarmDate.setMinutes(minutes);
+  // if the alarm would be before the current time, add a day
+  if (alarmDate < new Date()) {
+    alarmDate.setDate(alarmDate.getDate() + 1);
+  }
   return alarmDate;
 };
 
-export const scheduleAlarm = async (
+/**
+ * Creates a local notification for an alarm
+ * @param hours the hour the alarm goes off
+ * @param minutes the minute the alarm goes off
+ * @param amOrPM whether the alarm is for the AM or PM
+ * @param repeats whether to repeat this alarm every day
+ * @returns the date of the alarm
+ */
+export const scheduleAlarmNotification = (
   hours: number,
   minutes: number,
   amOrPM: string,
+  repeats: boolean,
 ) => {
   const d = createAlarmDate(hours, minutes, amOrPM);
-  const fireDate = ReactNativeAN.parseDate(d);
-  const alarmNotifData = {
-    title: 'My Notification Title',
-    message: 'My Notification Message',
-    small_icon: 'ic_launcher',
-    data: { foo: 'bar' },
-  };
-  const alarm = await ReactNativeAN.scheduleAlarm({
-    ...alarmNotifData,
-    fire_date: fireDate,
+
+  PushNotification.localNotificationSchedule({
+    message: 'Alarm!',
+    date: d,
+    allowWhileIdle: true,
+    repeatType: repeats ? 'day' : undefined,
   });
 
   return d;
