@@ -8,7 +8,7 @@ type AlarmItemProps = {
 };
 
 const AlarmItem = (props: AlarmItemProps) => {
-  const { message } = props.notificationData;
+  const { message, date } = props.notificationData;
 
   return (
     <Card style={{ marginTop: 10, overflow: 'hidden' }} row>
@@ -17,6 +17,7 @@ const AlarmItem = (props: AlarmItemProps) => {
       </View>
       <View style={{ flex: 3, padding: 10 }} centerV>
         <Text>{message}</Text>
+        <Text>{date.toLocaleTimeString()}</Text>
       </View>
     </Card>
   );

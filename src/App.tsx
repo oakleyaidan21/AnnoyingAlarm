@@ -1,5 +1,5 @@
 import React from 'react';
-import { Platform, StatusBar, UIManager } from 'react-native';
+import { Platform, SafeAreaView, StatusBar, UIManager } from 'react-native';
 import { View } from 'react-native-ui-lib';
 import MainNavigator from './navigation/MainNavigator';
 import { setupComponentThemes } from './rnui/ComponentConfig';
@@ -21,9 +21,9 @@ const App = () => {
   return (
     <>
       <StatusBar backgroundColor={'white'} barStyle="dark-content" />
-      <View useSafeArea flex>
+      <SafeAreaView style={{ flex: 1 }}>
         <MainNavigator />
-      </View>
+      </SafeAreaView>
     </>
   );
 };
