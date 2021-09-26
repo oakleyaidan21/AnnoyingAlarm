@@ -1,4 +1,4 @@
-import PushNotification from 'react-native-push-notification';
+import PushNotification, { Importance } from 'react-native-push-notification';
 import { createAlarmDate } from './AlarmUtils';
 
 /**
@@ -22,7 +22,26 @@ export const scheduleAlarmNotification = (
     date: d,
     allowWhileIdle: true,
     repeatType: repeats ? 'day' : undefined,
+    channelId: 'alarm',
   });
 
   return d;
+};
+
+/**
+ * Creates the channel for sending notifications on android
+ */
+export const createChannel = () => {
+  PushNotification.createChannel(
+    {
+      channelId: 'alarm',
+      channelName: 'Alarms',
+      channelDescription: 'A channel for alarms',
+      playSound: true,
+      soundName: 'default',
+      importance: Importance.HIGH,
+      vibrate: true,
+    },
+    created => console.log(`createChannel returned '${created}'`), // (optional) callback returns whether the channel was created, false means it already existed.
+  );
 };
